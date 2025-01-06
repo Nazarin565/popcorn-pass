@@ -1,8 +1,13 @@
+import { ChooseDate } from "./components/ChooseDate";
+import { ChooseFilm } from "./components/ChooseFilm";
+import { MainContainer } from "./components/MainContainer/style";
+
 function App() {
   return (
-    <div>
-      <h1>Hello world</h1>
-    </div>
+    <MainContainer>
+      <ChooseDate />
+      <ChooseFilm />
+    </MainContainer>
   );
 }
 
