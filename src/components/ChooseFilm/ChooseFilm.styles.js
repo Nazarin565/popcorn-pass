@@ -54,6 +54,7 @@ export const DescriptionWrapper = styled(Box)`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  align-items: center;
   gap: 8px;
   height: 300px;
 `;

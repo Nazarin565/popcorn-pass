@@ -11,7 +11,9 @@ import {
   FilmDescription,
 } from "./ChooseFilm.styles";
 
-const ChooseFilm = () => {
+const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
+
+const ChooseFilm = ({ handleOpenModal }) => {
   return (
     <Container>
       <StyledH5>
@@ -21,12 +23,11 @@ const ChooseFilm = () => {
         <DescriptionWrapper>
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
-            <StyledButton>10:00</StyledButton>
-            <StyledButton>12:00</StyledButton>
-            <StyledButton>14:00</StyledButton>
-            <StyledButton>16:00</StyledButton>
-            <StyledButton>18:00</StyledButton>
-            <StyledButton>20:00</StyledButton>
+            {availiableTimes.map((time) => (
+              <StyledButton onClick={() => handleOpenModal(time)}>
+                {time}
+              </StyledButton>
+            ))}
           </ButtonsWrapper>
           <FilmDescription>
             {" "}
@@ -50,12 +51,11 @@ const ChooseFilm = () => {
         <DescriptionWrapper>
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
-            <StyledButton>10:00</StyledButton>
-            <StyledButton>12:00</StyledButton>
-            <StyledButton>14:00</StyledButton>
-            <StyledButton>16:00</StyledButton>
-            <StyledButton>18:00</StyledButton>
-            <StyledButton>20:00</StyledButton>
+            {availiableTimes.map((time) => (
+              <StyledButton onClick={() => handleOpenModal(time)}>
+                {time}
+              </StyledButton>
+            ))}
           </ButtonsWrapper>
           <FilmDescription>
             {" "}
