@@ -1,6 +1,6 @@
-import { ChooseDate } from "./components/ChooseDate";
-import { ChooseFilm } from "./components/ChooseFilm";
-import { MainContainer } from "./components/MainContainer/style";
+import { MainContainer } from "./App.styles";
+import ChooseDate from "./components/ChooseDate";
+import ChooseFilm from "./components/ChooseFilm";
 
 function App() {
   return (
