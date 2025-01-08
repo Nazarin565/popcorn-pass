@@ -18,5 +18,5 @@ export const seats = [
   { id: 17, name: 17, isReserved: true },
   { id: 18, name: 18, isReserved: false },
   { id: 19, name: 19, isReserved: true },
-  { id: 20, name: 20, isReserved: false },
+  { id: 20, name: 20, isReserved: true },
 ];
