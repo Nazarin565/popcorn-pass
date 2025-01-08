@@ -3,12 +3,13 @@ import { DateCalendarStyled, Header, MainContainer } from "./App.styles";
 import ChooseDate from "./components/ChooseDate";
 import ChooseFilm from "./components/ChooseFilm";
 import dayjs from "dayjs";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import ChoosePlaces from "./components/ChoosePlaces";
 
 function App() {
   const [openModal, SetOpenModal] = useState("");
   const [date, setDate] = useState(dayjs(Date.now()));
+  const chooseFilmRef = useRef(null);
 
   const handleOpenModal = (time) => SetOpenModal(time);
   const handleCloseModal = () => SetOpenModal("");
@@ -23,16 +24,28 @@ function App() {
 
   const formattedDate = date.format("MMMM D");
 
+  const scrollToChooseFilm = () => {
+    if (chooseFilmRef.current) {
+      chooseFilmRef.current.scrollIntoView();
+    }
+  };
+
   return (
     <MainContainer>
       <Header>
-        <ChooseDate handleSetToday={handleSetToday} />
+        <ChooseDate
+          handleSetToday={handleSetToday}
+          scrollToChooseFilm={scrollToChooseFilm}
+        />
         <DateCalendarStyled
           views={["day"]}
           minDate={dayjs(Date.now())}
           maxDate={dayjs(maxDate)}
           value={date}
-          onChange={setDate}
+          onChange={(newDate) => {
+            setDate(newDate);
+            scrollToChooseFilm();
+          }}
         />
       </Header>
 
@@ -44,7 +57,7 @@ function App() {
         />
       )}
 
-      <Box flex={1} display={"flex"}>
+      <Box flex={1} display={"flex"} ref={chooseFilmRef}>
         <ChooseFilm
           handleOpenModal={handleOpenModal}
           formattedDate={formattedDate}

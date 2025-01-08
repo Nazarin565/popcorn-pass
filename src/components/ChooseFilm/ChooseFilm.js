@@ -15,7 +15,7 @@ const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
 const ChooseFilm = ({ handleOpenModal, formattedDate }) => {
   return (
-    <Container>
+    <Container id="choose-film">
       <StyledH5>
         In the cinema on <CurrentDate>{formattedDate}</CurrentDate>
       </StyledH5>

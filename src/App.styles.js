@@ -6,8 +6,8 @@ export const MainContainer = styled(Container).attrs({
   disableGutters: true,
 })`
   background-color: #f0f0f0;
-  margin: 8px;
-  height: 98vh;
+  margin: 4px;
+  height: 99vh;
   overflow-y: auto;
   border-radius: 16px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
