@@ -8,9 +8,12 @@ import ChoosePlaces from "./components/ChoosePlaces";
 
 function App() {
   const [openModal, SetOpenModal] = useState("");
+  const [date, setDate] = useState(dayjs(Date.now()));
 
   const handleOpenModal = (time) => SetOpenModal(time);
   const handleCloseModal = () => SetOpenModal("");
+
+  const handleSetToday = () => setDate(dayjs(Date.now()));
 
   const maxDate = new Date(
     new Date().getFullYear(),
@@ -18,16 +21,18 @@ function App() {
     new Date().getDate() + 30
   );
 
+  const formattedDate = date.format("MMMM D");
+
   return (
     <MainContainer>
       <Header>
-        <ChooseDate />
+        <ChooseDate handleSetToday={handleSetToday} />
         <DateCalendarStyled
           views={["day"]}
-          defaultValue={dayjs(Date.now())}
           minDate={dayjs(Date.now())}
           maxDate={dayjs(maxDate)}
-          value={dayjs(Date.now())}
+          value={date}
+          onChange={setDate}
         />
       </Header>
 
@@ -35,11 +40,15 @@ function App() {
         <ChoosePlaces
           openModal={openModal}
           handleCloseModal={handleCloseModal}
+          formattedDate={formattedDate}
         />
       )}
 
       <Box flex={1} display={"flex"}>
-        <ChooseFilm handleOpenModal={handleOpenModal} />
+        <ChooseFilm
+          handleOpenModal={handleOpenModal}
+          formattedDate={formattedDate}
+        />
       </Box>
     </MainContainer>
   );

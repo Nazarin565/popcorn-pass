@@ -13,18 +13,18 @@ import {
 
 const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
-const ChooseFilm = ({ handleOpenModal }) => {
+const ChooseFilm = ({ handleOpenModal, formattedDate }) => {
   return (
     <Container>
       <StyledH5>
-        In the cinema on <CurrentDate>January 7</CurrentDate>
+        In the cinema on <CurrentDate>{formattedDate}</CurrentDate>
       </StyledH5>
       <Wrapper>
         <DescriptionWrapper>
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
             {availiableTimes.map((time) => (
-              <StyledButton onClick={() => handleOpenModal(time)}>
+              <StyledButton key={time} onClick={() => handleOpenModal(time)}>
                 {time}
               </StyledButton>
             ))}
@@ -52,7 +52,7 @@ const ChooseFilm = ({ handleOpenModal }) => {
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
             {availiableTimes.map((time) => (
-              <StyledButton onClick={() => handleOpenModal(time)}>
+              <StyledButton key={time} onClick={() => handleOpenModal(time)}>
                 {time}
               </StyledButton>
             ))}

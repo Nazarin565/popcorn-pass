@@ -6,15 +6,18 @@ import {
   StyledParagraph,
   Wrapper,
 } from "./ChooseDate.styles";
+import { useMediaQuery } from "@mui/material";
 
-const ChooseDate = () => {
+const ChooseDate = ({ handleSetToday }) => {
+  const isMobile = useMediaQuery("(max-width: 900px)");
+
   return (
     <Wrapper>
       <StyledH1>Popcorn Pass</StyledH1>
       <StyledH6>Your easist way to find tickets in the cinema</StyledH6>
-      <StyledButton>Find for today</StyledButton>
+      <StyledButton onClick={handleSetToday}>Find for today</StyledButton>
       <StyledParagraph variant="body2">or</StyledParagraph>
-      <StyledH6>Choose availiable date -{">"}</StyledH6>
+      <StyledH6>Choose availiable date {isMobile ? "↓" : "→"}</StyledH6>
     </Wrapper>
   );
 };

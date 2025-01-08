@@ -1,9 +1,15 @@
 import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
-import { Seat, StyledBoxModal } from "./ChoosePlaces.styles";
+import {
+  ChoosenSeatsWrapper,
+  Screen,
+  Seat,
+  SeatsWrapper,
+  StyledBoxModal,
+} from "./ChoosePlaces.styles";
 import { seats } from "../../utils/constants";
 
-const ChoosePlaces = ({ openModal, handleCloseModal }) => {
+const ChoosePlaces = ({ openModal, handleCloseModal, formattedDate }) => {
   const [chosenSeats, setChosenSeats] = useState([]);
 
   useEffect(() => {
@@ -19,23 +25,19 @@ const ChoosePlaces = ({ openModal, handleCloseModal }) => {
     });
   };
 
-  console.log(chosenSeats);
+  const handleFinishOrder = () => {
+    alert("Success!");
+    handleCloseModal();
+  };
 
   return (
     <Modal open={true} onClose={handleCloseModal}>
       <StyledBoxModal>
         <Typography variant="h5" textAlign={"center"}>
-          "Film name here" on January 7, {openModal}
+          "Film name here" on {formattedDate}, {openModal}
         </Typography>
-        <Box border={1} py={3} px={20}>
-          Screen
-        </Box>
-        <Box
-          display={"flex"}
-          flexWrap={"wrap"}
-          gap={2}
-          justifyContent={"center"}
-        >
+        <Screen>Screen</Screen>
+        <SeatsWrapper>
           {seats.map((seat) => {
             const isChosen = chosenSeats.includes(seat.id);
 
@@ -50,31 +52,28 @@ const ChoosePlaces = ({ openModal, handleCloseModal }) => {
               </Seat>
             );
           })}
-        </Box>
+        </SeatsWrapper>
 
         {!!chosenSeats.length && (
           <Box border={1} p={1}>
-            <Typography sx={{ textAlign: "center" }}>Your order:</Typography>
+            <Typography textAlign={"center"}>Your order:</Typography>
 
-            <Box display={"flex"} gap={1} flexWrap={"wrap"}>
+            <ChoosenSeatsWrapper>
               {chosenSeats.map((seat) => (
                 <Typography key={seat} sx={{ border: 1, p: 1 }}>
                   Seat {seat}
                 </Typography>
               ))}
-            </Box>
+            </ChoosenSeatsWrapper>
           </Box>
         )}
 
         <Button
           variant="contained"
           disabled={!chosenSeats.length}
-          onClick={() => {
-            alert("Success!");
-            handleCloseModal();
-          }}
+          onClick={handleFinishOrder}
         >
-          Order
+          Reserve
         </Button>
       </StyledBoxModal>
     </Modal>

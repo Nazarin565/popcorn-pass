@@ -21,6 +21,7 @@ export const ButtonsWrapper = styled(Box)`
   display: flex;
   flex-wrap: wrap;
   gap: 4px;
+  justify-content: center;
 `;
 
 export const StyledButton = styled(Button).attrs({
@@ -29,6 +30,10 @@ export const StyledButton = styled(Button).attrs({
   && {
     padding: 24px;
     border-radius: 12px;
+
+    @media (max-width: 545px) {
+      padding: 0;
+    }
   }
 `;
 
@@ -40,6 +45,7 @@ export const StyledH5 = styled(Typography).attrs({
     font-weight: 700;
     margin: 16px;
     color: #0c0c0c;
+    text-align: center;
   }
 `;
 
@@ -48,6 +54,7 @@ export const CurrentDate = styled.span`
   padding: 4px;
   border: 1px solid #000;
   border-radius: 12px;
+  white-space: nowrap;
 `;
 
 export const DescriptionWrapper = styled(Box)`
