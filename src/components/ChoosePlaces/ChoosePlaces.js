@@ -8,16 +8,22 @@ import {
   StyledBoxModal,
 } from "./ChoosePlaces.styles";
 import { seats } from "../../utils/constants";
+import { useNavigate, useSearchParams } from "react-router";
+import dayjs from "dayjs";
 
-const ChoosePlaces = ({ openModal, handleCloseModal, formattedDate }) => {
-  const [chosenSeats, setChosenSeats] = useState([]);
+const ChoosePlaces = () => {
+  const [selectedSeats, setSelectedSeats] = useState([]);
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const selectedDate = searchParams.get("date") || dayjs().format("MMMM D");
+  const selectedTime = searchParams.get("time") || "";
 
   useEffect(() => {
-    setChosenSeats([]);
+    setSelectedSeats([]);
   }, []);
 
   const toogleChooseSeat = (seatId) => {
-    setChosenSeats((prev) => {
+    setSelectedSeats((prev) => {
       if (prev.includes(seatId)) {
         return prev.filter((id) => id !== seatId);
       }
@@ -27,19 +33,28 @@ const ChoosePlaces = ({ openModal, handleCloseModal, formattedDate }) => {
 
   const handleFinishOrder = () => {
     alert("Success!");
-    handleCloseModal();
+    navigate("/");
+  };
+
+  const handleCloseModal = () => {
+    searchParams.delete("time");
+
+    navigate({
+      pathname: "/",
+      search: searchParams.toString(),
+    });
   };
 
   return (
     <Modal open={true} onClose={handleCloseModal}>
       <StyledBoxModal>
         <Typography variant="h5" textAlign={"center"}>
-          "Film name here" on {formattedDate}, {openModal}
+          "Film name here" on {selectedDate}, {selectedTime}
         </Typography>
         <Screen>Screen</Screen>
         <SeatsWrapper>
           {seats.map((seat) => {
-            const isChosen = chosenSeats.includes(seat.id);
+            const isChosen = selectedSeats.includes(seat.id);
 
             return (
               <Seat
@@ -54,12 +69,12 @@ const ChoosePlaces = ({ openModal, handleCloseModal, formattedDate }) => {
           })}
         </SeatsWrapper>
 
-        {!!chosenSeats.length && (
+        {!!selectedSeats.length && (
           <Box border={1} p={1}>
             <Typography textAlign={"center"}>Your order:</Typography>
 
             <ChoosenSeatsWrapper>
-              {chosenSeats.map((seat) => (
+              {selectedSeats.map((seat) => (
                 <Typography key={seat} sx={{ border: 1, p: 1 }}>
                   Seat {seat}
                 </Typography>
@@ -70,7 +85,7 @@ const ChoosePlaces = ({ openModal, handleCloseModal, formattedDate }) => {
 
         <Button
           variant="contained"
-          disabled={!chosenSeats.length}
+          disabled={!selectedSeats.length}
           onClick={handleFinishOrder}
         >
           Reserve

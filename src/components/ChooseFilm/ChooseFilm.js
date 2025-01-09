@@ -10,21 +10,36 @@ import {
   StyledH6,
   FilmDescription,
 } from "./ChooseFilm.styles";
+import { useNavigate, useSearchParams } from "react-router";
+import dayjs from "dayjs";
 
 const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 
-const ChooseFilm = ({ handleOpenModal, formattedDate }) => {
+const ChooseFilm = () => {
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const date = searchParams.get("date") || dayjs().format("MMMM D");
+
+  const handleChooseTime = (selectedTime) => {
+    searchParams.set("time", selectedTime);
+
+    navigate({
+      pathname: "choose-places",
+      search: searchParams.toString(),
+    });
+  };
+
   return (
     <Container id="choose-film">
       <StyledH5>
-        In the cinema on <CurrentDate>{formattedDate}</CurrentDate>
+        In the cinema on <CurrentDate>{date}</CurrentDate>
       </StyledH5>
       <Wrapper>
         <DescriptionWrapper>
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
             {availiableTimes.map((time) => (
-              <StyledButton key={time} onClick={() => handleOpenModal(time)}>
+              <StyledButton key={time} onClick={() => handleChooseTime(time)}>
                 {time}
               </StyledButton>
             ))}
@@ -52,9 +67,7 @@ const ChooseFilm = ({ handleOpenModal, formattedDate }) => {
           <StyledH6>Here will be film name</StyledH6>
           <ButtonsWrapper>
             {availiableTimes.map((time) => (
-              <StyledButton key={time} onClick={() => handleOpenModal(time)}>
-                {time}
-              </StyledButton>
+              <StyledButton key={time}>{time}</StyledButton>
             ))}
           </ButtonsWrapper>
           <FilmDescription>

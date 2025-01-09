@@ -4,25 +4,36 @@ import ChooseDate from "./components/ChooseDate";
 import ChooseFilm from "./components/ChooseFilm";
 import dayjs from "dayjs";
 import { useRef, useState } from "react";
-import ChoosePlaces from "./components/ChoosePlaces";
+import { Outlet, useSearchParams } from "react-router";
 
 function App() {
-  const [openModal, SetOpenModal] = useState("");
-  const [date, setDate] = useState(dayjs(Date.now()));
   const chooseFilmRef = useRef(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const today = dayjs().format("MMMM D");
+  const [date, setDate] = useState(
+    dayjs(`${searchParams.get("date") || today}, ${dayjs().year()}`)
+  );
 
-  const handleOpenModal = (time) => SetOpenModal(time);
-  const handleCloseModal = () => SetOpenModal("");
+  const handleChangeDay = (newDate) => {
+    setDate(newDate);
+    const formattedDate = newDate.format("MMMM D");
 
-  const handleSetToday = () => setDate(dayjs(Date.now()));
+    if (formattedDate === today) {
+      searchParams.delete("date");
+    } else {
+      searchParams.set("date", formattedDate);
+    }
+    setSearchParams(searchParams);
+    scrollToChooseFilm();
+  };
+
+  const handleSetToday = () => setDate(dayjs());
 
   const maxDate = new Date(
     new Date().getFullYear(),
     new Date().getMonth(),
     new Date().getDate() + 30
   );
-
-  const formattedDate = date.format("MMMM D");
 
   const scrollToChooseFilm = () => {
     if (chooseFilmRef.current) {
@@ -39,29 +50,17 @@ function App() {
         />
         <DateCalendarStyled
           views={["day"]}
-          minDate={dayjs(Date.now())}
+          minDate={dayjs()}
           maxDate={dayjs(maxDate)}
           value={date}
-          onChange={(newDate) => {
-            setDate(newDate);
-            scrollToChooseFilm();
-          }}
+          onChange={(newDate) => handleChangeDay(newDate)}
         />
       </Header>
 
-      {openModal && (
-        <ChoosePlaces
-          openModal={openModal}
-          handleCloseModal={handleCloseModal}
-          formattedDate={formattedDate}
-        />
-      )}
+      <Outlet />
 
       <Box flex={1} display={"flex"} ref={chooseFilmRef}>
-        <ChooseFilm
-          handleOpenModal={handleOpenModal}
-          formattedDate={formattedDate}
-        />
+        <ChooseFilm />
       </Box>
     </MainContainer>
   );
