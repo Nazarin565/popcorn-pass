@@ -1,4 +1,7 @@
 import React, { useState } from "react";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
+import dayjs from "dayjs";
+
 import {
   Wrapper,
   Container,
@@ -9,9 +12,7 @@ import {
   DescriptionWrapper,
   StyledH6,
   FilmDescription,
-} from "./ChooseFilm.styles";
-import { useLocation, useNavigate, useSearchParams } from "react-router";
-import dayjs from "dayjs";
+} from "../../styled/ChooseFilm/ChooseFilm.styles";
 
 const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
 

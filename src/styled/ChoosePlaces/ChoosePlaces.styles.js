@@ -6,7 +6,7 @@ export const StyledBoxModal = styled(Box)`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #f0f0f0;
+  background-color: ${(props) => props.theme.colors.background};
   border: 2px solid #000;
   box-shadow: 24px;
   padding: 24px;
@@ -28,9 +28,16 @@ export const Seat = styled(({ isReserved, isChosen, ...otherProps }) => (
 }))`
   && {
     border: 1px solid #000;
-    color: ${(props) => (props.isReserved ? "#000" : "#fff")};
+    color: ${(props) =>
+      props.isReserved
+        ? props.theme.colors.mainText
+        : props.theme.colors.headerText};
     background-color: ${(props) =>
-      props.isReserved ? "#cdcbcb" : props.isChosen ? "#36c838" : "#1976D2"};
+      props.isReserved
+        ? props.theme.colors.reservedPlace
+        : props.isChosen
+        ? props.theme.colors.selectedPlace
+        : props.theme.colors.availiablePlace};
     height: 30px;
     padding: 0 !important;
   }

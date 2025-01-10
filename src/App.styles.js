@@ -1,11 +1,12 @@
 import { Container } from "@mui/material";
 import { DateCalendar } from "@mui/x-date-pickers";
+
 import styled from "styled-components";
 
 export const MainContainer = styled(Container).attrs({
   disableGutters: true,
 })`
-  background-color: #f0f0f0;
+  background-color: ${(props) => props.theme.colors.background};
   margin: 4px;
   height: 99vh;
   overflow-y: auto;
@@ -14,19 +15,17 @@ export const MainContainer = styled(Container).attrs({
 `;
 
 export const Header = styled.header`
-  display: flex;
-  justify-content: space-around;
   background-image: url(/bg-movie.avif);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
-  flex: 1;
   padding: 36px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-items: center;
 
-  @media (max-width: 900px) {
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
+  @media (max-width: ${(props) => props.theme.breakpoints.tablet}) {
+    grid-template-columns: repeat(1, 1fr);
     gap: 12px;
   }
 `;

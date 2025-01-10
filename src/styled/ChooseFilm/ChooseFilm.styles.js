@@ -31,7 +31,7 @@ export const StyledButton = styled(Button).attrs({
     padding: 24px;
     border-radius: 12px;
 
-    @media (max-width: 545px) {
+    @media (max-width: ${(props) => props.theme.breakpoints.mobile}) {
       padding: 0;
     }
   }
@@ -44,13 +44,13 @@ export const StyledH5 = styled(Typography).attrs({
     font-size: 28px;
     font-weight: 700;
     margin: 16px;
-    color: #0c0c0c;
+    color: ${(props) => props.theme.colors.mainText};
     text-align: center;
   }
 `;
 
 export const CurrentDate = styled.span`
-  background-color: #f0f0f0;
+  background-color: ${(props) => props.theme.colors.background};
   padding: 4px;
   border: 1px solid #000;
   border-radius: 12px;

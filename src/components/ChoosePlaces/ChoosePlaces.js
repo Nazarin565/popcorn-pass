@@ -1,15 +1,16 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router";
+import { Box, Button, Modal, Typography } from "@mui/material";
+import dayjs from "dayjs";
+
 import {
   ChoosenSeatsWrapper,
   Screen,
   Seat,
   SeatsWrapper,
   StyledBoxModal,
-} from "./ChoosePlaces.styles";
+} from "../../styled/ChoosePlaces/ChoosePlaces.styles";
 import { seats } from "../../utils/constants";
-import { useNavigate, useSearchParams } from "react-router";
-import dayjs from "dayjs";
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);

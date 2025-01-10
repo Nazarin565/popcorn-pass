@@ -1,10 +1,11 @@
-import { Box } from "@mui/material";
-import { DateCalendarStyled, Header, MainContainer } from "./App.styles";
-import ChooseDate from "./components/ChooseDate";
-import ChooseFilm from "./components/ChooseFilm";
-import dayjs from "dayjs";
 import { useRef, useState } from "react";
 import { Outlet, useSearchParams } from "react-router";
+import { Box } from "@mui/material";
+import dayjs from "dayjs";
+
+import { ChooseDate, ChooseFilm } from "./components";
+
+import { DateCalendarStyled, Header, MainContainer } from "./App.styles";
 
 function App() {
   const chooseFilmRef = useRef(null);
