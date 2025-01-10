@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   Wrapper,
   Container,
@@ -10,7 +10,7 @@ import {
   StyledH6,
   FilmDescription,
 } from "./ChooseFilm.styles";
-import { useNavigate, useSearchParams } from "react-router";
+import { useLocation, useNavigate, useSearchParams } from "react-router";
 import dayjs from "dayjs";
 
 const availiableTimes = ["10:00", "12:00", "14:00", "16:00", "18:00", "20:00"];
@@ -20,13 +20,21 @@ const ChooseFilm = () => {
   const [searchParams] = useSearchParams();
   const date = searchParams.get("date") || dayjs().format("MMMM D");
 
+  const location = useLocation();
+  const [initialPreviousLocation] = useState(location);
+  const state = location.state;
+  const previousLocation = state?.previousLocation || initialPreviousLocation;
+
   const handleChooseTime = (selectedTime) => {
     searchParams.set("time", selectedTime);
 
-    navigate({
-      pathname: "choose-places",
-      search: searchParams.toString(),
-    });
+    navigate(
+      {
+        pathname: "choose-places",
+        search: searchParams.toString(),
+      },
+      { state: { previousLocation } }
+    );
   };
 
   return (

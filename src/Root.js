@@ -1,20 +1,23 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router";
+import { Route, Routes, useLocation } from "react-router";
 import App from "./App";
 import ChoosePlaces from "./components/ChoosePlaces";
-import { LocalizationProvider } from "@mui/x-date-pickers";
-import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 
 const Root = () => {
+  const location = useLocation();
+  const previousLocation = location.state?.previousLocation;
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDayjs}>
-      <BrowserRouter>
+    <>
+      <Routes location={previousLocation || location}>
+        <Route path="/" element={<App />} />
+      </Routes>
+      {previousLocation && (
         <Routes>
-          <Route path="/" element={<App />} />
           <Route path="choose-places" element={<ChoosePlaces />} />
         </Routes>
-      </BrowserRouter>
-    </LocalizationProvider>
+      )}
+    </>
   );
 };
 
