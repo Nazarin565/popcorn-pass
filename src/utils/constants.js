@@ -20,3 +20,5 @@ export const seats = [
   { id: 19, name: 19, isReserved: true },
   { id: 20, name: 20, isReserved: true },
 ];
+
+export const availableTimes = ['10:00', '12:00', '14:00', '16:00', '18:00', '20:00'];

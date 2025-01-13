@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
-import styled from "styled-components";
+import { Box, Button, Typography } from '@mui/material';
+import styled from 'styled-components';
 
 export const Container = styled(Box)`
   display: flex;
@@ -25,7 +25,7 @@ export const ButtonsWrapper = styled(Box)`
 `;
 
 export const StyledButton = styled(Button).attrs({
-  variant: "outlined",
+  variant: 'outlined',
 })`
   && {
     padding: 24px;
@@ -38,7 +38,7 @@ export const StyledButton = styled(Button).attrs({
 `;
 
 export const StyledH5 = styled(Typography).attrs({
-  variant: "h5",
+  variant: 'h5',
 })`
   && {
     font-size: 28px;
@@ -67,13 +67,13 @@ export const DescriptionWrapper = styled(Box)`
 `;
 
 export const StyledH6 = styled(Typography).attrs({
-  variant: "h6",
+  variant: 'h6',
 })`
   text-align: center;
 `;
 
 export const FilmDescription = styled(Typography).attrs({
-  variant: "body2",
+  variant: 'body2',
 })`
   overflow: hidden;
 `;

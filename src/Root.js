@@ -1,8 +1,8 @@
-import React from "react";
-import { Route, Routes, useLocation } from "react-router";
+import React from 'react';
+import { Route, Routes, useLocation } from 'react-router';
 
-import App from "./App";
-import { ChoosePlaces } from "./components";
+import App from './App';
+import { ChoosePlaces } from './components';
 
 const Root = () => {
   const location = useLocation();

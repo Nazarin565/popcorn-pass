@@ -1,5 +1,5 @@
-import { Box, Button, Typography } from "@mui/material";
-import styled from "styled-components";
+import { Box, Button, Typography } from '@mui/material';
+import styled from 'styled-components';
 
 export const Wrapper = styled(Box)`
   display: flex;
@@ -10,7 +10,7 @@ export const Wrapper = styled(Box)`
 `;
 
 export const StyledH1 = styled(Typography).attrs({
-  variant: "h1",
+  variant: 'h1',
 })`
   && {
     font-size: 4rem;
@@ -21,13 +21,13 @@ export const StyledH1 = styled(Typography).attrs({
 `;
 
 export const StyledParagraph = styled(Typography).attrs((props) => ({
-  $variant: props.variant || "body1",
+  $variant: props.variant || 'body1',
 }))`
   color: #fff;
 `;
 
 export const StyledH6 = styled(Typography).attrs({
-  variant: "h6",
+  variant: 'h6',
 })`
   && {
     font-size: 1.5rem;
@@ -38,7 +38,7 @@ export const StyledH6 = styled(Typography).attrs({
 `;
 
 export const StyledButton = styled(Button).attrs({
-  variant: "contained",
+  variant: 'contained',
 })`
   && {
     padding: 14px;
