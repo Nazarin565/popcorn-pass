@@ -2,15 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import dayjs from 'dayjs';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  ChoosenSeatsWrapper,
-  Screen,
-  Seat,
-  SeatsWrapper,
-  StyledBoxModal,
-} from '../styled/ChoosePlaces.styles';
-import { seats } from '../utils/constants';
+import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
+import { setCurrentFilm } from '../redux/store/slices/filmsSlice';
+import { updateSeats } from '../redux/store/slices/seatsSlice';
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -19,9 +15,18 @@ const ChoosePlaces = () => {
   const selectedDate = searchParams.get('date') || dayjs().format('MMMM D');
   const selectedTime = searchParams.get('time') || '';
 
+  const dispatch = useDispatch();
+  const { currentFilm } = useSelector((state) => state.films);
+  const { seats } = useSelector((state) => state.seats);
+
   useEffect(() => {
     setSelectedSeats([]);
-  }, []);
+
+    return () => {
+      dispatch(setCurrentFilm(null));
+      dispatch(updateSeats([]));
+    };
+  }, [dispatch]);
 
   const toogleChooseSeat = (seatId) => {
     setSelectedSeats((prev) => {
@@ -50,7 +55,7 @@ const ChoosePlaces = () => {
     <Modal open={true} onClose={handleCloseModal}>
       <StyledBoxModal>
         <Typography variant="h5" textAlign={'center'}>
-          "Film name here" on {selectedDate}, {selectedTime}
+          {currentFilm} on {selectedDate}, {selectedTime}
         </Typography>
         <Screen>Screen</Screen>
         <SeatsWrapper>

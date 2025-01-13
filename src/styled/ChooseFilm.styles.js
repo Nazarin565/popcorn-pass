@@ -73,7 +73,7 @@ export const StyledH6 = styled(Typography).attrs({
 `;
 
 export const FilmDescription = styled(Typography).attrs({
-  variant: 'body2',
+  variant: 'body1',
 })`
   overflow: hidden;
 `;

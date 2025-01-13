@@ -1,17 +1,27 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
 import { Box } from '@mui/material';
 import dayjs from 'dayjs';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { ChooseDate, ChooseFilm } from './components';
 
 import { DateCalendarStyled, Header, MainContainer } from './App.styles';
+import { getFilms } from './redux/store/slices/filmsSlice';
 
 function App() {
   const chooseFilmRef = useRef(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const today = dayjs().format('MMMM D');
   const [date, setDate] = useState(dayjs(`${searchParams.get('date') || today}, ${dayjs().year()}`));
+
+  const { filmsList } = useSelector((state) => state.films);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getFilms());
+  }, [dispatch]);
 
   const handleChangeDay = (newDate) => {
     setDate(newDate);
@@ -52,7 +62,7 @@ function App() {
       <Outlet />
 
       <Box flex={1} display={'flex'} ref={chooseFilmRef}>
-        <ChooseFilm />
+        <ChooseFilm filmsList={filmsList} />
       </Box>
     </MainContainer>
   );
