@@ -1,10 +1,23 @@
-import React from "react";
-import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
-import reportWebVitals from "./reportWebVitals";
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import { LocalizationProvider } from '@mui/x-date-pickers';
+import { ThemeProvider } from 'styled-components';
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
-root.render(<App />);
+import Root from './Root';
 
-reportWebVitals();
+import GlobalStyles from './GlobalStyles';
+import { theme } from './styled/theme';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <ThemeProvider theme={theme}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <GlobalStyles />
+      <BrowserRouter>
+        <Root />
+      </BrowserRouter>
+    </LocalizationProvider>
+  </ThemeProvider>
+);
