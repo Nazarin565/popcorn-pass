@@ -7,7 +7,7 @@ export const StyledBoxModal = styled(Box)`
   left: 50%;
   transform: translate(-50%, -50%);
   background-color: ${(props) => props.theme.colors.background};
-  border: 2px solid #000;
+  border: 2px solid ${(props) => props.theme.colors.borderColor};
   box-shadow: 24px;
   padding: 24px;
   width: 70vw;
@@ -25,7 +25,7 @@ export const Seat = styled(({ isReserved, isChosen, ...otherProps }) => <Button 
   disabled: props.isReserved,
 }))`
   && {
-    border: 1px solid #000;
+    border: 1px solid ${(props) => props.theme.colors.borderColor};
     color: ${(props) => (props.isReserved ? props.theme.colors.mainText : props.theme.colors.headerText)};
     background-color: ${(props) =>
       props.isReserved
@@ -39,7 +39,7 @@ export const Seat = styled(({ isReserved, isChosen, ...otherProps }) => <Button 
 `;
 
 export const Screen = styled(Box)`
-  border: 1px solid #000;
+  border: 1px solid ${(props) => props.theme.colors.borderColor};
   padding-block: 16px;
   width: 90%;
   text-align: center;

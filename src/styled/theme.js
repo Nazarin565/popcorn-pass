@@ -8,6 +8,8 @@ export const theme = {
     selectedPlace: '#36c838',
     availiablePlace: '#1976D2',
     calendarBackground: 'aliceblue',
+    borderColor: '#000',
+    chooseFilmBackground: 'beige',
   },
   breakpoints: {
     mobile: '545px',

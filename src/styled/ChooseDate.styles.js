@@ -17,13 +17,13 @@ export const StyledH1 = styled(Typography).attrs({
     font-weight: 700;
   }
   text-align: center;
-  color: #fff;
+  color: ${(props) => props.theme.colors.headerText};
 `;
 
 export const StyledParagraph = styled(Typography).attrs((props) => ({
   $variant: props.variant || 'body1',
 }))`
-  color: #fff;
+  color: ${(props) => props.theme.colors.headerText};
 `;
 
 export const StyledH6 = styled(Typography).attrs({
@@ -34,7 +34,7 @@ export const StyledH6 = styled(Typography).attrs({
     font-weight: 500;
   }
   text-align: center;
-  color: #fff;
+  color: ${(props) => props.theme.colors.headerText};
 `;
 
 export const StyledButton = styled(Button).attrs({

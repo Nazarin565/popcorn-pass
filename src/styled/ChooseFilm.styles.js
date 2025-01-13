@@ -6,7 +6,7 @@ export const Container = styled(Box)`
   flex-direction: column;
   align-items: center;
   flex: 2;
-  background-color: beige;
+  background-color: ${(props) => props.theme.colors.chooseFilmBackground};
 `;
 
 export const Wrapper = styled(Box)`
@@ -52,7 +52,7 @@ export const StyledH5 = styled(Typography).attrs({
 export const CurrentDate = styled.span`
   background-color: ${(props) => props.theme.colors.background};
   padding: 4px;
-  border: 1px solid #000;
+  border: 1px solid ${(props) => props.theme.colors.borderColor};
   border-radius: 12px;
   white-space: nowrap;
 `;
