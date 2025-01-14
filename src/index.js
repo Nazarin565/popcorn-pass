@@ -10,7 +10,7 @@ import Root from './Root';
 
 import GlobalStyles from './GlobalStyles';
 import { theme } from './styled/theme';
-import { store } from './redux/store/store';
+import { store } from './redux/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

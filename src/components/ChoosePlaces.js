@@ -5,8 +5,8 @@ import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
-import { setCurrentFilm } from '../redux/store/slices/filmsSlice';
-import { updateSeats } from '../redux/store/slices/seatsSlice';
+import { setCurrentFilm } from '../redux/modules/films';
+import { updateSeats } from '../redux/modules/seats';
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);

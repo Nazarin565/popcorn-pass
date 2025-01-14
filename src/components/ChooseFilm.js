@@ -15,8 +15,8 @@ import {
   StyledH6,
   FilmDescription,
 } from '../styled/ChooseFilm.styles';
-import { setCurrentFilm } from '../redux/store/slices/filmsSlice';
-import { getSeats } from '../redux/store/slices/seatsSlice';
+import { setCurrentFilm } from '../redux/modules/films';
+import { getSeatsFromServer } from '../redux/modules/seats';
 
 const ChooseFilm = ({ filmsList }) => {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ const ChooseFilm = ({ filmsList }) => {
   const handleChooseTime = (selectedTime, filmName) => {
     searchParams.set('time', selectedTime);
     dispatch(setCurrentFilm(filmName));
-    dispatch(getSeats());
+    dispatch(getSeatsFromServer());
 
     navigate(
       {

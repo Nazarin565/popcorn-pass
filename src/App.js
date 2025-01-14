@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { ChooseDate, ChooseFilm } from './components';
 
 import { DateCalendarStyled, Header, MainContainer } from './App.styles';
-import { getFilms } from './redux/store/slices/filmsSlice';
+import { getFilmsFromServer } from './redux/modules/films';
 
 function App() {
   const chooseFilmRef = useRef(null);
@@ -20,7 +20,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getFilms());
+    dispatch(getFilmsFromServer());
   }, [dispatch]);
 
   const handleChangeDay = (newDate) => {
