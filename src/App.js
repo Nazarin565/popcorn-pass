@@ -59,7 +59,7 @@ function App() {
 
       <Outlet />
 
-      <Box display={'flex'} flex={1} ref={chooseFilmRef} height={'100%'}>
+      <Box display={'flex'} flex={1} ref={chooseFilmRef} minHeight={'100%'}>
         <ChooseFilm />
       </Box>
     </MainContainer>
