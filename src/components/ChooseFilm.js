@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useLocation, useNavigate, useSearchParams } from 'react-router';
 import dayjs from 'dayjs';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
 import {
@@ -17,8 +17,9 @@ import {
 } from '../styled/ChooseFilm.styles';
 import { setCurrentFilm } from '../redux/modules/films';
 import { getSeatsFromServer } from '../redux/modules/seats';
+import Loader from './Loader';
 
-const ChooseFilm = ({ filmsList }) => {
+const ChooseFilm = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const date = searchParams.get('date') || dayjs().format('MMMM D');
@@ -29,6 +30,7 @@ const ChooseFilm = ({ filmsList }) => {
   const previousLocation = state?.previousLocation || initialPreviousLocation;
 
   const dispatch = useDispatch();
+  const { loader, filmsList, error } = useSelector((state) => state.films);
 
   const handleChooseTime = (selectedTime, filmName) => {
     searchParams.set('time', selectedTime);
@@ -49,7 +51,16 @@ const ChooseFilm = ({ filmsList }) => {
       <StyledH5>
         In the cinema on <CurrentDate>{date}</CurrentDate>
       </StyledH5>
-      {filmsList.length ? (
+      {loader && <Loader />}
+
+      {error && !loader && <Typography color="red">{error.message}</Typography>}
+
+      {!loader && !error && !filmsList.length && (
+        <Typography color="red">Any films for this day. Try another day!</Typography>
+      )}
+
+      {!!filmsList.length &&
+        !loader &&
         filmsList.map(({ id, filmName, timeSlots, description, img }) => (
           <Wrapper key={id}>
             <DescriptionWrapper>
@@ -65,10 +76,7 @@ const ChooseFilm = ({ filmsList }) => {
             </DescriptionWrapper>
             <img src={img} alt={filmName} width={200} height={300} />
           </Wrapper>
-        ))
-      ) : (
-        <Typography color="red">Any films for this day. Try another day!</Typography>
-      )}
+        ))}
     </Container>
   );
 };

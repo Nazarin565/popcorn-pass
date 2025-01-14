@@ -1,24 +1,35 @@
 import { put, takeEvery } from 'redux-saga/effects';
 
-import { GET_FILMS_FROM_SERVER, updateFilmsList } from '../modules/films';
-import { GET_SEATS_FROM_SERVER, updateSeats } from '../modules/seats';
+import {
+  GET_FILMS_FROM_SERVER,
+  updateFilmsListError,
+  updateFilmsListRequest,
+  updateFilmsListSuccess
+} from '../modules/films';
+import { 
+  GET_SEATS_FROM_SERVER,
+  updateSeatsError, 
+  updateSeatsRequest, 
+  updateSeatsSuccess 
+} from '../modules/seats';
 
 export function* getFilmsSaga() {
   try {
+    yield put(updateFilmsListRequest());
     const payload = yield fetch('https://demo3637811.mockable.io/showtimes').then((response) => response.json());
-
-    yield put(updateFilmsList(payload));
+    yield put(updateFilmsListSuccess(payload));
   } catch (error) {
-    console.error(error);
+    yield put(updateFilmsListError(error));
   }
 }
 
 export function* getSeatsSaga() {
   try {
+    yield put(updateSeatsRequest());
     const payload = yield fetch('https://demo3637811.mockable.io/seats').then((response) => response.json());
-    yield put(updateSeats(payload));
+    yield put(updateSeatsSuccess(payload));
   } catch (error) {
-    console.error(error);
+    yield put(updateSeatsError(error));
   }
 }
 

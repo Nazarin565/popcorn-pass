@@ -6,7 +6,8 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
 import { setCurrentFilm } from '../redux/modules/films';
-import { updateSeats } from '../redux/modules/seats';
+import { updateSeatsSuccess } from '../redux/modules/seats';
+import Loader from './Loader';
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -17,16 +18,19 @@ const ChoosePlaces = () => {
 
   const dispatch = useDispatch();
   const { currentFilm } = useSelector((state) => state.films);
-  const { seats } = useSelector((state) => state.seats);
+  const { seats, loader, error } = useSelector((state) => state.seats);
 
   useEffect(() => {
+    if (!currentFilm) {
+      navigate('/');
+    }
     setSelectedSeats([]);
 
     return () => {
       dispatch(setCurrentFilm(null));
-      dispatch(updateSeats([]));
+      dispatch(updateSeatsSuccess([]));
     };
-  }, [dispatch]);
+  }, [dispatch, currentFilm, navigate]);
 
   const toogleChooseSeat = (seatId) => {
     setSelectedSeats((prev) => {
@@ -59,20 +63,27 @@ const ChoosePlaces = () => {
         </Typography>
         <Screen>Screen</Screen>
         <SeatsWrapper>
-          {seats.map((seat) => {
-            const isChosen = selectedSeats.includes(seat.id);
+          {loader && <Loader />}
 
-            return (
-              <Seat
-                key={seat.id}
-                isReserved={seat.isReserved}
-                isChosen={isChosen}
-                onClick={() => toogleChooseSeat(seat.id)}
-              >
-                {seat.name}
-              </Seat>
-            );
-          })}
+          {error && !seats.length && <Typography color="red">{error.message}</Typography>}
+
+          {!!seats.length &&
+            !loader &&
+            !error &&
+            seats.map((seat) => {
+              const isChosen = selectedSeats.includes(seat.id);
+
+              return (
+                <Seat
+                  key={seat.id}
+                  isReserved={seat.isReserved}
+                  isChosen={isChosen}
+                  onClick={() => toogleChooseSeat(seat.id)}
+                >
+                  {seat.name}
+                </Seat>
+              );
+            })}
         </SeatsWrapper>
 
         {!!selectedSeats.length && (
