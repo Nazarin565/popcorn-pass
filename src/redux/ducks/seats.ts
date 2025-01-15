@@ -1,17 +1,31 @@
-import { put } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
+import { put, call } from 'redux-saga/effects';
+
+import { SeatType } from 'types/seats';
 
 export const UPDATE_SEATS_REQUEST = 'seats/UPDATE_SEATS_REQUEST';
 export const UPDATE_SEATS_SUCCESS = 'seats/UPDATE_SEATS_SUCCESS';
 export const UPDATE_SEATS_ERROR = 'seats/UPDATE_SEATS_ERROR';
 export const GET_SEATS_FROM_SERVER = 'seats/GET_SEATS_FROM_SERVER';
 
-const initialState = {
+interface InitialState {
+  seats: SeatType[];
+  loader: boolean;
+  error: null | Error;
+}
+
+interface Action {
+  type: string;
+  payload?: any;
+}
+
+const initialState: InitialState = {
   seats: [],
   loader: false,
   error: null,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = initialState, action: Action) {
   switch (action.type) {
     case UPDATE_SEATS_REQUEST:
       return {
@@ -45,14 +59,14 @@ export function updateSeatsRequest() {
   };
 }
 
-export function updateSeatsSuccess(data) {
+export function updateSeatsSuccess(data: SeatType[]) {
   return {
     type: UPDATE_SEATS_SUCCESS,
     payload: data,
   };
 }
 
-export function updateSeatsError(error) {
+export function updateSeatsError(error: null | unknown = null) {
   return {
     type: UPDATE_SEATS_ERROR,
     payload: error,
@@ -65,10 +79,12 @@ export function getSeatsFromServer() {
   };
 }
 
-export function* getSeatsSaga() {
+export function* getSeatsSaga(): SagaIterator {
   try {
     yield put(updateSeatsRequest());
-    const payload = yield fetch('https://demo3637811.mockable.io/seats').then((response) => response.json());
+    const response = yield call(fetch, 'https://demo3637811.mockable.io/seats');
+    const payload = yield call([response, 'json']);
+    
     yield put(updateSeatsSuccess(payload));
   } catch (error) {
     yield put(updateSeatsError(error));

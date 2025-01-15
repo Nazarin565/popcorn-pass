@@ -1,7 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Outlet, useSearchParams } from 'react-router';
 import { Box } from '@mui/material';
-import dayjs from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import { useDispatch } from 'react-redux';
 
 import { ChooseDate, ChooseFilm } from './components';
@@ -10,7 +10,7 @@ import { DateCalendarStyled, Header, MainContainer } from './App.styles';
 import { getFilmsFromServer } from './redux/ducks/films';
 
 function App() {
-  const chooseFilmRef = useRef(null);
+  const chooseFilmRef = useRef<null | HTMLDivElement>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const today = dayjs().format('MMMM D');
   const [date, setDate] = useState(dayjs(`${searchParams.get('date') || today}, ${dayjs().year()}`));
@@ -21,7 +21,7 @@ function App() {
     dispatch(getFilmsFromServer());
   }, [dispatch, date]);
 
-  const handleChangeDay = (newDate) => {
+  const handleChangeDay = (newDate: Dayjs) => {
     setDate(newDate);
     const formattedDate = newDate.format('MMMM D');
 

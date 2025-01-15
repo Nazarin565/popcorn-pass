@@ -1,4 +1,7 @@
-import { put } from 'redux-saga/effects';
+import { SagaIterator } from 'redux-saga';
+import { call, put } from 'redux-saga/effects';
+
+import { Film } from 'types/films';
 
 export const UPDATE_FILMS_LIST_REQUEST = 'films/UPDATE_FILMS_LIST_REQUEST';
 export const UPDATE_FILMS_LIST_SUCCESS = 'films/UPDATE_FILMS_LIST_SUCCESS';
@@ -6,14 +9,26 @@ export const UPDATE_FILMS_LIST_ERROR = 'films/UPDATE_FILMS_LIST_ERROR';
 export const SET_CURRENT_FILM = 'films/SET_CURRENT_FILM';
 export const GET_FILMS_FROM_SERVER = 'films/GET_FILMS_FROM_SERVER';
 
-const initialState = {
+interface InitialState {
+  filmsList: Film[];
+  currentFilm: null | string;
+  loader: boolean;
+  error: null | Error;
+}
+
+interface Action {
+  type: string;
+  payload?: any;
+}
+
+const initialState: InitialState = {
   filmsList: [],
   currentFilm: null,
   loader: false,
   error: null,
 };
 
-export default function reducer(state = initialState, action = {}) {
+export default function reducer(state = initialState, action: Action) {
   switch (action.type) {
     case UPDATE_FILMS_LIST_REQUEST:
       return {
@@ -51,15 +66,15 @@ export function updateFilmsListRequest() {
   return { type: UPDATE_FILMS_LIST_REQUEST };
 }
 
-export function updateFilmsListSuccess(data) {
+export function updateFilmsListSuccess(data: Film[]) {
   return { type: UPDATE_FILMS_LIST_SUCCESS, payload: data };
 }
 
-export function updateFilmsListError(error = null) {
+export function updateFilmsListError(error: null | unknown = null) {
   return { type: UPDATE_FILMS_LIST_ERROR, payload: error };
 }
 
-export function setCurrentFilm(data) {
+export function setCurrentFilm(data: string | null = null) {
   return { type: SET_CURRENT_FILM, payload: data };
 }
 
@@ -67,10 +82,12 @@ export function getFilmsFromServer() {
   return { type: GET_FILMS_FROM_SERVER };
 }
 
-export function* getFilmsSaga() {
+export function* getFilmsSaga(): SagaIterator {
   try {
     yield put(updateFilmsListRequest());
-    const payload = yield fetch('https://demo3637811.mockable.io/showtimes').then((response) => response.json());
+    const response = yield call(fetch, 'https://demo3637811.mockable.io/showtimes');
+    const payload = yield call([response, 'json']);
+
     yield put(updateFilmsListSuccess(payload));
   } catch (error) {
     yield put(updateFilmsListError(error));

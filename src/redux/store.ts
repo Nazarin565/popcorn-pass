@@ -13,18 +13,25 @@ export function* sagas() {
   yield takeEvery(GET_SEATS_FROM_SERVER, getSeatsSaga);
 }
 
-const composeEnhancers =
-  window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+declare global {
+  interface Window {
+    __REDUX_DEVTOOLS_EXTENSION_COMPOSE__?: typeof compose;
+  }
+}
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
   films,
   seats,
-})
+});
 
 export const store = createStore(
-  rootReducer,
-  composeEnhancers(applyMiddleware(sagaMiddleware)),
+  rootReducer, 
+  composeEnhancers(applyMiddleware(sagaMiddleware))
 );
 
 sagaMiddleware.run(sagas);
 
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;

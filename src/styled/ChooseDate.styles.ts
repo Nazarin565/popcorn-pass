@@ -21,7 +21,7 @@ export const StyledH1 = styled(Typography).attrs({
 `;
 
 export const StyledParagraph = styled(Typography).attrs((props) => ({
-  $variant: props.variant || 'body1',
+  variant: props.variant || 'body1',
 }))`
   color: ${(props) => props.theme.colors.headerText};
 `;

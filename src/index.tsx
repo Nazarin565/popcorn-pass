@@ -12,7 +12,7 @@ import GlobalStyles from './GlobalStyles';
 import { theme } from './styled/theme';
 import { store } from './redux/store';
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement);
 root.render(
   <Provider store={store}>
     <ThemeProvider theme={theme}>
