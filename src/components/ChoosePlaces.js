@@ -4,10 +4,11 @@ import { Box, Button, Modal, Typography } from '@mui/material';
 import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
-import { setCurrentFilm } from '../redux/modules/films';
-import { updateSeatsSuccess } from '../redux/modules/seats';
 import Loader from './Loader';
+
+import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
+import { setCurrentFilm } from '../redux/ducks/films';
+import { updateSeatsSuccess } from '../redux/ducks/seats';
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);

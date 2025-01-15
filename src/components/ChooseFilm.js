@@ -4,6 +4,8 @@ import dayjs from 'dayjs';
 import { useDispatch, useSelector } from 'react-redux';
 import { Typography } from '@mui/material';
 
+import Loader from './Loader';
+
 import {
   Wrapper,
   Container,
@@ -15,25 +17,27 @@ import {
   StyledH6,
   FilmDescription,
 } from '../styled/ChooseFilm.styles';
-import { setCurrentFilm } from '../redux/modules/films';
-import { getSeatsFromServer } from '../redux/modules/seats';
-import Loader from './Loader';
+import { setCurrentFilm } from '../redux/ducks/films';
+import { getSeatsFromServer } from '../redux/ducks/seats';
 
 const ChooseFilm = () => {
   const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const date = searchParams.get('date') || dayjs().format('MMMM D');
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const location = useLocation();
   const [initialPreviousLocation] = useState(location);
   const state = location.state;
   const previousLocation = state?.previousLocation || initialPreviousLocation;
 
+  const date = searchParams.get('date') || dayjs().format('MMMM D');
+
   const dispatch = useDispatch();
   const { loader, filmsList, error } = useSelector((state) => state.films);
 
   const handleChooseTime = (selectedTime, filmName) => {
     searchParams.set('time', selectedTime);
+    setSearchParams(searchParams);
+
     dispatch(setCurrentFilm(filmName));
     dispatch(getSeatsFromServer());
 

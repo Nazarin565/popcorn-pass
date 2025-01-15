@@ -1,3 +1,5 @@
+import { put } from 'redux-saga/effects';
+
 export const UPDATE_SEATS_REQUEST = 'seats/UPDATE_SEATS_REQUEST';
 export const UPDATE_SEATS_SUCCESS = 'seats/UPDATE_SEATS_SUCCESS';
 export const UPDATE_SEATS_ERROR = 'seats/UPDATE_SEATS_ERROR';
@@ -61,4 +63,14 @@ export function getSeatsFromServer() {
   return {
     type: GET_SEATS_FROM_SERVER,
   };
+}
+
+export function* getSeatsSaga() {
+  try {
+    yield put(updateSeatsRequest());
+    const payload = yield fetch('https://demo3637811.mockable.io/seats').then((response) => response.json());
+    yield put(updateSeatsSuccess(payload));
+  } catch (error) {
+    yield put(updateSeatsError(error));
+  }
 }

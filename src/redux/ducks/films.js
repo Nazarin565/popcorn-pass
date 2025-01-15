@@ -1,3 +1,5 @@
+import { put } from 'redux-saga/effects';
+
 export const UPDATE_FILMS_LIST_REQUEST = 'films/UPDATE_FILMS_LIST_REQUEST';
 export const UPDATE_FILMS_LIST_SUCCESS = 'films/UPDATE_FILMS_LIST_SUCCESS';
 export const UPDATE_FILMS_LIST_ERROR = 'films/UPDATE_FILMS_LIST_ERROR';
@@ -63,4 +65,14 @@ export function setCurrentFilm(data) {
 
 export function getFilmsFromServer() {
   return { type: GET_FILMS_FROM_SERVER };
+}
+
+export function* getFilmsSaga() {
+  try {
+    yield put(updateFilmsListRequest());
+    const payload = yield fetch('https://demo3637811.mockable.io/showtimes').then((response) => response.json());
+    yield put(updateFilmsListSuccess(payload));
+  } catch (error) {
+    yield put(updateFilmsListError(error));
+  }
 }
