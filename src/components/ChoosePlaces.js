@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router';
 import { Box, Button, Modal, Typography } from '@mui/material';
 import dayjs from 'dayjs';
+import { useDispatch, useSelector } from 'react-redux';
 
-import {
-  ChoosenSeatsWrapper,
-  Screen,
-  Seat,
-  SeatsWrapper,
-  StyledBoxModal,
-} from '../styled/ChoosePlaces.styles';
-import { seats } from '../utils/constants';
+import Loader from './Loader';
+
+import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
+import { setCurrentFilm } from '../redux/ducks/films';
+import { updateSeatsSuccess } from '../redux/ducks/seats';
 
 const ChoosePlaces = () => {
   const [selectedSeats, setSelectedSeats] = useState([]);
@@ -19,9 +17,21 @@ const ChoosePlaces = () => {
   const selectedDate = searchParams.get('date') || dayjs().format('MMMM D');
   const selectedTime = searchParams.get('time') || '';
 
+  const dispatch = useDispatch();
+  const { currentFilm } = useSelector((state) => state.films);
+  const { seats, loader, error } = useSelector((state) => state.seats);
+
   useEffect(() => {
+    if (!currentFilm) {
+      navigate('/');
+    }
     setSelectedSeats([]);
-  }, []);
+
+    return () => {
+      dispatch(setCurrentFilm(null));
+      dispatch(updateSeatsSuccess([]));
+    };
+  }, [dispatch, currentFilm, navigate]);
 
   const toogleChooseSeat = (seatId) => {
     setSelectedSeats((prev) => {
@@ -50,24 +60,31 @@ const ChoosePlaces = () => {
     <Modal open={true} onClose={handleCloseModal}>
       <StyledBoxModal>
         <Typography variant="h5" textAlign={'center'}>
-          "Film name here" on {selectedDate}, {selectedTime}
+          {currentFilm} on {selectedDate}, {selectedTime}
         </Typography>
         <Screen>Screen</Screen>
         <SeatsWrapper>
-          {seats.map((seat) => {
-            const isChosen = selectedSeats.includes(seat.id);
+          {loader && <Loader />}
 
-            return (
-              <Seat
-                key={seat.id}
-                isReserved={seat.isReserved}
-                isChosen={isChosen}
-                onClick={() => toogleChooseSeat(seat.id)}
-              >
-                {seat.name}
-              </Seat>
-            );
-          })}
+          {error && !seats.length && <Typography color="red">{error.message}</Typography>}
+
+          {!!seats.length &&
+            !loader &&
+            !error &&
+            seats.map((seat) => {
+              const isChosen = selectedSeats.includes(seat.id);
+
+              return (
+                <Seat
+                  key={seat.id}
+                  isReserved={seat.isReserved}
+                  isChosen={isChosen}
+                  onClick={() => toogleChooseSeat(seat.id)}
+                >
+                  {seat.name}
+                </Seat>
+              );
+            })}
         </SeatsWrapper>
 
         {!!selectedSeats.length && (
