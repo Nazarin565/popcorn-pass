@@ -77,13 +77,7 @@ const ChoosePlaces = () => {
               const isChosen = selectedSeats.includes(id);
 
               return (
-                <Seat
-                  key={id}
-                  isReserved={isReserved}
-                  isChosen={isChosen}
-                  onClick={() => toogleChooseSeat(id)}
-                  disabled={isReserved}
-                >
+                <Seat key={id} isReserved={isReserved} isChosen={isChosen} onClick={() => toogleChooseSeat(id)}>
                   {name}
                 </Seat>
               );
