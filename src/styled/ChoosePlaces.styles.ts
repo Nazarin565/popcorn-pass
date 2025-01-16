@@ -33,7 +33,7 @@ export const Seat = styled(Button).attrs((props: ButtonProps & SeatStyledProps) 
         ? props.theme.colors.reservedPlace
         : props.isChosen
         ? props.theme.colors.selectedPlace
-        : props.theme.colors.availiablePlace};
+        : props.theme.colors.availablePlace};
     height: 30px;
     padding: 0 !important;
   }

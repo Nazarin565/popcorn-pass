@@ -6,7 +6,7 @@ export const theme = {
     background: '#f0f0f0',
     reservedPlace: '#cdcbcb',
     selectedPlace: '#36c838',
-    availiablePlace: '#1976D2',
+    availablePlace: '#1976D2',
     calendarBackground: 'aliceblue',
     borderColor: '#000',
     chooseFilmBackground: 'beige',

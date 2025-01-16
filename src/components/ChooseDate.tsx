@@ -28,7 +28,7 @@ const ChooseDate: React.FC<Props> = ({ handleSetToday, scrollToChooseFilm }) => 
       <StyledH6>Your easist way to find tickets in the cinema</StyledH6>
       <StyledButton onClick={handleChooseToday}>Find for today</StyledButton>
       <StyledParagraph variant="body2">or</StyledParagraph>
-      <StyledH6>Choose availiable date {isTablet ? '↓' : '→'}</StyledH6>
+      <StyledH6>Choose available date {isTablet ? '↓' : '→'}</StyledH6>
     </Wrapper>
   );
 };

@@ -49,7 +49,9 @@ export const StyledH5 = styled(Typography).attrs({
   }
 `;
 
-export const CurrentDate = styled.span`
+export const SelectedDate = styled.span.attrs({
+  role: 'time',
+})`
   background-color: ${(props) => props.theme.colors.background};
   padding: 4px;
   border: 1px solid ${(props) => props.theme.colors.borderColor};

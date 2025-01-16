@@ -12,7 +12,7 @@ import {
   ButtonsWrapper,
   StyledButton,
   StyledH5,
-  CurrentDate,
+  SelectedDate,
   DescriptionWrapper,
   StyledH6,
   FilmDescription,
@@ -55,7 +55,7 @@ const ChooseFilm = () => {
   return (
     <Container id="choose-film">
       <StyledH5>
-        In the cinema on <CurrentDate>{date}</CurrentDate>
+        In the cinema on <SelectedDate>{date}</SelectedDate>
       </StyledH5>
       {loader && <Loader />}
 
@@ -73,7 +73,11 @@ const ChooseFilm = () => {
               <StyledH6>{filmName}</StyledH6>
               <ButtonsWrapper>
                 {timeSlots.map((time: string) => (
-                  <StyledButton key={time} onClick={() => handleChooseTime(time, filmName)}>
+                  <StyledButton
+                    data-testid="timePickerButton"
+                    key={time}
+                    onClick={() => handleChooseTime(time, filmName)}
+                  >
                     {time}
                   </StyledButton>
                 ))}

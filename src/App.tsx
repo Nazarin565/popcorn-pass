@@ -49,6 +49,7 @@ function App() {
       <Header container spacing={1.5}>
         <ChooseDate handleSetToday={handleSetToday} scrollToChooseFilm={scrollToChooseFilm} />
         <DateCalendarStyled
+          data-testid="calendar"
           views={['day']}
           minDate={dayjs()}
           maxDate={dayjs(maxDate)}
