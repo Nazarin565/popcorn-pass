@@ -68,7 +68,11 @@ const ChoosePlaces = () => {
         <SeatsWrapper>
           {loader && <Loader />}
 
-          {error && !seats.length && <Typography color="red">{error.message}</Typography>}
+          {error && !seats.length && (
+            <Typography data-testid="fetchError" color="red">
+              {error.message}
+            </Typography>
+          )}
 
           {!!seats.length &&
             !loader &&
@@ -77,7 +81,13 @@ const ChoosePlaces = () => {
               const isChosen = selectedSeats.includes(id);
 
               return (
-                <Seat key={id} isReserved={isReserved} isChosen={isChosen} onClick={() => toogleChooseSeat(id)}>
+                <Seat
+                  data-testid="seatButton"
+                  key={id}
+                  isReserved={isReserved}
+                  isChosen={isChosen}
+                  onClick={() => toogleChooseSeat(id)}
+                >
                   {name}
                 </Seat>
               );

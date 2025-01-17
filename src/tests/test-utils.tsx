@@ -29,6 +29,7 @@ beforeEach(() => {
           img: 'img1.jpg',
         },
       ],
+      currentFilm: 'Test film'
     },
     seats: {
       seats: [

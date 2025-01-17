@@ -1,8 +1,11 @@
 import React from 'react';
-import { fireEvent, render, screen } from 'tests/test-utils';
+import { Provider } from 'react-redux';
+import configureMockStore from 'redux-mock-store';
+import dayjs from 'dayjs';
 
 import { ChooseFilm } from 'components';
-import dayjs from 'dayjs';
+
+import { fireEvent, render, screen } from 'tests/test-utils';
 
 describe('Choose Film Component', () => {
   it('displays correct date', () => {
@@ -27,32 +30,47 @@ describe('Choose Film Component', () => {
 
     window.history.pushState({}, '', '/');
   });
-});
 
-it('displays message when no films are availiable', () => {
-  const mockState = {
-    loader: false,
-    error: false,
-    filmsList: [],
-  };
+  it('displays message when no films are availiable', () => {
+    const mockStore = configureMockStore();
 
-  render(<ChooseFilm />, { initialState: mockState });
+    const store = mockStore({
+      films: {
+        loader: false,
+        error: null,
+        filmsList: [],
+      },
+      seats: {
+        seats: [],
+        loader: false,
+        error: null,
+      },
+    });
 
-  const selectedDateElement = screen.getByText('Any films for this day. Try another day!');
+    render(
+      <Provider store={store}>
+        <ChooseFilm />
+      </Provider>
+    );
 
-  expect(selectedDateElement).toBeVisible();
-});
+    const selectedDateElement = screen.getByText('Any films for this day. Try another day!');
 
-it('handles all buttons which redurect user to selecting places', async () => {
-  const mockClickHandler = jest.fn();
+    expect(selectedDateElement).toBeVisible();
+  });
 
-  render(<ChooseFilm />);
+  it('handles all buttons which redurect user to selecting places', () => {
+    const onClickSpy = jest.spyOn(React, 'useCallback').mockImplementation((fn) => fn);
 
-  const buttonLinkElements = await screen.findAllByTestId('timePickerButton');
+    render(<ChooseFilm />);
 
-  buttonLinkElements.forEach((button) => {
-    fireEvent.click(button);
+    const buttonLinkElements = screen.getAllByTestId('timePickerButton');
 
-    expect(mockClickHandler).toHaveBeenCalled();
+    buttonLinkElements.forEach((button) => {
+      fireEvent.click(button);
+
+      expect(onClickSpy).toHaveBeenCalled();
+    });
+
+    onClickSpy.mockRestore();
   });
 });
