@@ -4,12 +4,12 @@ import { Provider } from 'react-redux';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import mediaQuery from 'css-mediaquery';
-
+import { render } from '@testing-library/react';
+import configureStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components';
+
 import { theme } from 'styled/theme';
 import GlobalStyles from 'GlobalStyles';
-import configureStore from 'redux-mock-store';
-import { render } from '@testing-library/react';
 
 const mockStore = configureStore();
 
@@ -29,7 +29,7 @@ beforeEach(() => {
           img: 'img1.jpg',
         },
       ],
-      currentFilm: 'Test film'
+      currentFilm: 'Test film',
     },
     seats: {
       seats: [

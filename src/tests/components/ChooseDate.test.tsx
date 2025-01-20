@@ -1,8 +1,9 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { createMatchMedia, fireEvent, render, screen } from '../test-utils';
 
 import { ChooseDate } from 'components';
+
+import { createMatchMedia, fireEvent, render, screen } from '../test-utils';
 
 describe('Choose Date Component', () => {
   it('renders a heading with name of the app', () => {

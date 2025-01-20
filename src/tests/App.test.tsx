@@ -1,8 +1,9 @@
 import React from 'react';
-import { render, screen } from './test-utils';
 import '@testing-library/jest-dom';
 
 import App from 'App';
+
+import { render, screen } from './test-utils';
 
 describe('App component', () => {
   test('renders calendar', () => {
