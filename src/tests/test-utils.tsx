@@ -9,7 +9,7 @@ import configureStore from 'redux-mock-store';
 import { ThemeProvider } from 'styled-components';
 
 import { theme } from 'styled/theme';
-import GlobalStyles from 'GlobalStyles';
+import GlobalStyles from 'tests/GlobalStyles';
 
 const mockStore = configureStore();
 

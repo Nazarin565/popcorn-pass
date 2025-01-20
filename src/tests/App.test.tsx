@@ -6,7 +6,7 @@ import App from 'App';
 import { render, screen } from './test-utils';
 
 describe('App component', () => {
-  test('renders calendar', () => {
+  test('should render calendar', () => {
     render(<App />);
     const calendar = screen.getByTestId('calendar');
     expect(calendar).toBeInTheDocument();

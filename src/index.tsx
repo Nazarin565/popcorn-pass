@@ -8,7 +8,7 @@ import { Provider } from 'react-redux';
 
 import Root from './Root';
 
-import GlobalStyles from './GlobalStyles';
+import GlobalStyles from './tests/GlobalStyles';
 import { theme } from './styled/theme';
 import { store } from './redux/store';
 

@@ -8,30 +8,36 @@ import { ChooseFilm } from 'components';
 import { fireEvent, render, screen } from 'tests/test-utils';
 
 describe('Choose Film Component', () => {
-  it('displays correct date', () => {
+  it('should render date', () => {
+    render(<ChooseFilm />);
+
+    const selectedDateElement = screen.getByRole('time');
+
+    expect(selectedDateElement).toBeInTheDocument();
+  });
+
+  it('should display correct date', () => {
     render(<ChooseFilm />);
 
     const selectedDateElement = screen.getByRole('time');
     const todayDate = dayjs().format('MMMM D');
 
-    expect(selectedDateElement).toBeInTheDocument();
     expect(selectedDateElement).toHaveTextContent(todayDate);
   });
 
-  it('displays correct date from search params', () => {
+  it('should display correct date after user change selected date', () => {
     window.history.pushState({}, '', '/?date=January 23');
 
     render(<ChooseFilm />);
 
     const selectedDateElement = screen.getByRole('time');
 
-    expect(selectedDateElement).toBeInTheDocument();
     expect(selectedDateElement).toHaveTextContent('January 23');
 
     window.history.pushState({}, '', '/');
   });
 
-  it('displays message when no films are availiable', () => {
+  it('should display message when no films are availiable', () => {
     const mockStore = configureMockStore();
 
     const store = mockStore({
@@ -58,7 +64,7 @@ describe('Choose Film Component', () => {
     expect(selectedDateElement).toBeVisible();
   });
 
-  it('handles all buttons which redurect user to selecting places', () => {
+  it('should handle all button with time and redirect user to selecting places', () => {
     const onClickSpy = jest.spyOn(React, 'useCallback').mockImplementation((fn) => fn);
 
     render(<ChooseFilm />);

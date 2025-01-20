@@ -7,20 +7,27 @@ import { ChoosePlaces } from 'components';
 import { fireEvent, render, screen } from 'tests/test-utils';
 
 describe('Choose Places Component', () => {
-  it('renders correct data about selected film', () => {
+  it('should render h5 title for details of selected film', () => {
+    render(<ChoosePlaces />);
+
+    const currentFilmElement = screen.getByRole('heading', { level: 5 });
+
+    expect(currentFilmElement).toBeInTheDocument();
+  });
+
+  it('should render correct data about selected film', () => {
     window.history.pushState({}, '', '/choose-places?date=January 23&time=16:30');
 
     render(<ChoosePlaces />);
 
     const currentFilmElement = screen.getByRole('heading', { level: 5 });
 
-    expect(currentFilmElement).toBeInTheDocument();
     expect(currentFilmElement).toHaveTextContent('Test film on January 23, 16:30');
 
     window.history.pushState({}, '', '/');
   });
 
-  it('displays error message if was error furing fetch', () => {
+  it('should render error message if was error furing fetch', () => {
     const mockStore = configureMockStore();
 
     const store = mockStore({
@@ -47,11 +54,67 @@ describe('Choose Places Component', () => {
     const errorElement = screen.getByTestId('fetchError');
 
     expect(errorElement).toBeInTheDocument();
+  });
+
+  it('should display error message', () => {
+    const mockStore = configureMockStore();
+
+    const store = mockStore({
+      films: {
+        loader: false,
+        error: null,
+        filmsList: [],
+      },
+      seats: {
+        seats: [],
+        loader: false,
+        error: {
+          message: 'Error during fetch seats',
+        },
+      },
+    });
+
+    render(
+      <Provider store={store}>
+        <ChoosePlaces />
+      </Provider>
+    );
+
+    const errorElement = screen.getByTestId('fetchError');
+
     expect(errorElement).toHaveTextContent('Error during fetch seats');
+  });
+
+  it('should display error message with red color text', () => {
+    const mockStore = configureMockStore();
+
+    const store = mockStore({
+      films: {
+        loader: false,
+        error: null,
+        filmsList: [],
+      },
+      seats: {
+        seats: [],
+        loader: false,
+        error: {
+          message: 'Error during fetch seats',
+        },
+      },
+    });
+
+    render(
+      <Provider store={store}>
+        <ChoosePlaces />
+      </Provider>
+    );
+
+    const errorElement = screen.getByTestId('fetchError');
+
     expect(errorElement).toHaveStyle({ color: 'red' });
   });
 
-  it('displays correct number of places', () => {
+  it('should display correct number of places', () => {
     render(<ChoosePlaces />);
 
     const seatButtonElements = screen.getAllByTestId('seatButton');
@@ -59,13 +122,19 @@ describe('Choose Places Component', () => {
     expect(seatButtonElements).toHaveLength(5);
   });
 
-  it('renders button reserve if it disabled and not', () => {
+  it('should render button "Reserve" disabled by default', () => {
+    render(<ChoosePlaces />);
+
+    const reservedButton = screen.getByText('Reserve');
+
+    expect(reservedButton).toBeDisabled();
+  });
+
+  it('should enable button after selecting a place', () => {
     render(<ChoosePlaces />);
 
     const reservedButton = screen.getByText('Reserve');
     const seatButtonElements = screen.getAllByTestId('seatButton');
-
-    expect(reservedButton).toBeDisabled();
 
     fireEvent.click(seatButtonElements[0]);
 

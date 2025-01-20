@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 
 import { ChooseDate, ChooseFilm } from './components';
 
-import { DateCalendarStyled, Header, MainContainer } from './App.styles';
+import { DateCalendarStyled, Header, MainContainer } from './tests/App.styles';
 import { getFilmsFromServer } from './redux/ducks/films';
 
 function App() {
