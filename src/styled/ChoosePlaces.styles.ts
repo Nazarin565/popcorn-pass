@@ -1,5 +1,6 @@
-import { Box, Button } from '@mui/material';
+import { Box, Button, ButtonProps } from '@mui/material';
 import styled from 'styled-components';
+import { SeatStyledProps } from 'types/seats';
 
 export const StyledBoxModal = styled(Box)`
   position: absolute;
@@ -20,10 +21,10 @@ export const StyledBoxModal = styled(Box)`
   gap: 8px;
 `;
 
-export const Seat = styled(({ isReserved, isChosen, ...otherProps }) => <Button {...otherProps} />).attrs((props) => ({
+export const Seat = styled(Button).attrs((props: ButtonProps & SeatStyledProps) => ({
   variant: 'outlined',
   disabled: props.isReserved,
-}))`
+}))<ButtonProps & SeatStyledProps>`
   && {
     border: 1px solid ${(props) => props.theme.colors.borderColor};
     color: ${(props) => (props.isReserved ? props.theme.colors.mainText : props.theme.colors.headerText)};
@@ -32,7 +33,7 @@ export const Seat = styled(({ isReserved, isChosen, ...otherProps }) => <Button 
         ? props.theme.colors.reservedPlace
         : props.isChosen
         ? props.theme.colors.selectedPlace
-        : props.theme.colors.availiablePlace};
+        : props.theme.colors.availablePlace};
     height: 30px;
     padding: 0 !important;
   }

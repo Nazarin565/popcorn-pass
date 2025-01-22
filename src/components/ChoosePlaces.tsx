@@ -9,17 +9,19 @@ import Loader from './Loader';
 import { ChoosenSeatsWrapper, Screen, Seat, SeatsWrapper, StyledBoxModal } from '../styled/ChoosePlaces.styles';
 import { setCurrentFilm } from '../redux/ducks/films';
 import { updateSeatsSuccess } from '../redux/ducks/seats';
+import { RootState } from 'redux/store';
+import { SeatType } from 'types/seats';
 
 const ChoosePlaces = () => {
-  const [selectedSeats, setSelectedSeats] = useState([]);
+  const [selectedSeats, setSelectedSeats] = useState<string[]>([]);
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const selectedDate = searchParams.get('date') || dayjs().format('MMMM D');
   const selectedTime = searchParams.get('time') || '';
 
   const dispatch = useDispatch();
-  const { currentFilm } = useSelector((state) => state.films);
-  const { seats, loader, error } = useSelector((state) => state.seats);
+  const { currentFilm } = useSelector((state: RootState) => state.films);
+  const { seats, loader, error } = useSelector((state: RootState) => state.seats);
 
   useEffect(() => {
     if (!currentFilm) {
@@ -33,7 +35,7 @@ const ChoosePlaces = () => {
     };
   }, [dispatch, currentFilm, navigate]);
 
-  const toogleChooseSeat = (seatId) => {
+  const toogleChooseSeat = (seatId: string) => {
     setSelectedSeats((prev) => {
       if (prev.includes(seatId)) {
         return prev.filter((id) => id !== seatId);
@@ -66,22 +68,27 @@ const ChoosePlaces = () => {
         <SeatsWrapper>
           {loader && <Loader />}
 
-          {error && !seats.length && <Typography color="red">{error.message}</Typography>}
+          {error && !seats.length && (
+            <Typography data-testid="fetchError" color="red">
+              {error.message}
+            </Typography>
+          )}
 
           {!!seats.length &&
             !loader &&
             !error &&
-            seats.map((seat) => {
-              const isChosen = selectedSeats.includes(seat.id);
+            seats.map(({ id, name, isReserved }: SeatType) => {
+              const isChosen = selectedSeats.includes(id);
 
               return (
                 <Seat
-                  key={seat.id}
-                  isReserved={seat.isReserved}
+                  data-testid="seatButton"
+                  key={id}
+                  isReserved={isReserved}
                   isChosen={isChosen}
-                  onClick={() => toogleChooseSeat(seat.id)}
+                  onClick={() => toogleChooseSeat(id)}
                 >
-                  {seat.name}
+                  {name}
                 </Seat>
               );
             })}

@@ -1,0 +1,20 @@
+{
+  "compilerOptions": {
+    "module": "ESNext",
+    "moduleResolution": "node",
+    "baseUrl": "./src",
+    "paths": {
+      "*": ["*", "*.ts", "*.tsx", "*.js", "*.jsx"]
+    },
+    "target": "ES6",
+    "jsx": "react",
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "sourceMap": true,
+    "strict": true
+  },
+  "exclude": ["node_modules", "**/node_modules/*"],
+  "include": ["src"],
+  "types": ["jest", "node", "styled-components"]
+}
