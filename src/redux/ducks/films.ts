@@ -9,7 +9,7 @@ export const UPDATE_FILMS_LIST_ERROR = 'films/UPDATE_FILMS_LIST_ERROR';
 export const SET_CURRENT_FILM = 'films/SET_CURRENT_FILM';
 export const GET_FILMS_FROM_SERVER = 'films/GET_FILMS_FROM_SERVER';
 
-interface InitialState {
+export interface InitialFilmsState {
   filmsList: Film[];
   currentFilm: null | string;
   loader: boolean;
@@ -21,7 +21,7 @@ interface Action {
   payload?: any;
 }
 
-const initialState: InitialState = {
+const initialState: InitialFilmsState = {
   filmsList: [],
   currentFilm: null,
   loader: false,

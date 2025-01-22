@@ -8,7 +8,7 @@ export const UPDATE_SEATS_SUCCESS = 'seats/UPDATE_SEATS_SUCCESS';
 export const UPDATE_SEATS_ERROR = 'seats/UPDATE_SEATS_ERROR';
 export const GET_SEATS_FROM_SERVER = 'seats/GET_SEATS_FROM_SERVER';
 
-interface InitialState {
+export interface InitialSeatsState {
   seats: SeatType[];
   loader: boolean;
   error: null | Error;
@@ -19,7 +19,7 @@ interface Action {
   payload?: any;
 }
 
-const initialState: InitialState = {
+const initialState: InitialSeatsState = {
   seats: [],
   loader: false,
   error: null,
@@ -84,7 +84,7 @@ export function* getSeatsSaga(): SagaIterator {
     yield put(updateSeatsRequest());
     const response = yield call(fetch, 'https://demo3637811.mockable.io/seats');
     const payload = yield call([response, 'json']);
-    
+
     yield put(updateSeatsSuccess(payload));
   } catch (error) {
     yield put(updateSeatsError(error));
